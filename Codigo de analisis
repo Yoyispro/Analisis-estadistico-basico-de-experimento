@@ -1,0 +1,1024 @@
+Proyecto de Estadistica
+Descripcion: Desarrollar un experimento practico con la finalidad de recabar datos que permitan aplicar los temas vistos durante el curso
+
+Experimento : Se jugarron 100 partidas del shoter en primera persona counter strike , en la que se midio en tiempo de duracion de cada partida y el numero total de bajas conseguidas por todos los integrantes del equipo
+
+
+
+
+Cuestiones que pretendemos resolver:
+
+
+¿Existe alguna relación entre la duración de las partidas y el número de bajas totales?
+
+
+¿El uso del micrófono durante las partidas tiene algún impacto en el número de bajas totales?
+
+
+¿La duración de las partidas difiere cuando se utiliza un micrófono en comparación con cuando no se utiliza?
+
+
+¿Existen diferencias en el número de bajas totales entre las partidas en las que se utiliza un micrófono y las que no se utiliza?
+
+#Estadistica Descriptiva
+
+import numpy as np
+from scipy import stats
+
+data = [
+    [20, 5, 1],
+    [25, 7, 1],
+    [15, 3, 1],
+    [30, 0, 1],
+    [22, 6, 1],
+    [18, 4, 1],
+    [27, 7, 1],
+    [25, 7, 1],
+    [35, 9, 1],
+    [23, 6, 1],
+    [19, 4, 1],
+    [28, 7, 1],
+    [32, 8, 1],
+    [21, 5, 1],
+    [17, 3, 1],
+    [29, 7, 1],
+    [31, 8, 1],
+    [26, 7, 1],
+    [16, 4, 1],
+    [33, 9, 1],
+    [34, 9, 1],
+    [23, 1, 1],
+    [10, 0, 1],
+    [15, 2, 1],
+    [35, 5, 1],
+    [25, 7, 1],
+    [40, 8, 1],
+    [33, 4, 1],
+    [24, 4, 1],
+    [18, 4, 1],
+    [25, 5, 1],
+    [25, 2, 1],
+    [35, 9, 1],
+    [23, 2, 1],
+    [19, 4, 1],
+    [5, 0, 1],
+    [34, 4, 1 ],
+    [21,3 ,1 ],
+    [35,2,1 ],
+    [40,8,1  ],
+    [ 22,3,1  ],
+    [ 12,2,1 ],
+    [ 15,3,1 ],
+    [  26,4,1 ],
+    [  32,3,1 ],
+    [  23,3,1 ],
+    [  15,2,1 ],
+    [  12,3,1 ],
+    [  23,3,1],
+    [ 21,3,1],
+    [ 22,2,0],
+    [35,6,0],
+    [32,4,0],
+    [15,2,0],
+    [10,1,0],
+    [12,2,0],
+    [12,2,0],
+    [10,0,0],
+    [11,1,0],
+    [8,1,0 ],
+    [25,2,0],
+    [22,1,0],
+    [21,0,0],
+    [7,1,0,],
+    [5,0,0 ],
+    [10,1,0],
+    [9,0,0 ],
+    [15,3,0],
+    [12,0,0],
+    [14,4,0],
+    [18,3,0],
+    [10,0,0],
+    [11,1,0],
+    [14,3,0],
+    [42,6,0],
+    [15,1,0],
+    [19,1,0],
+    [16,2,0],
+    [14,1,0],
+    [11,2,0],
+    [14,3,0],
+    [16,2,0],
+    [17,1,0],
+    [38,5,0],
+    [24,4,0],
+    [23,3,0],
+    [26,0,0],
+    [11,1,0],
+    [19,1,0],
+    [10,0,0],
+    [11,2,0],
+    [16,3,0],
+    [14,3,0],
+    [13,3,0],
+    [15,3,0],
+    [14,0,0],
+    [25,1,0],
+    [17,0,0],
+    [14,4,0],
+    [12,0,0],
+
+
+
+
+
+]
+
+# Separar los datos en listas para cada variable
+x = [d[0] for d in data]
+y = [d[1] for d in data]
+
+
+
+# Calcular medidas de tendencia central
+media_x = np.mean(x)
+media_y = np.mean(y)
+
+
+mediana_x = np.median(x)
+mediana_y = np.median(y)
+
+
+# Calcular varianza muestral y desviación estándar
+varianza_x = np.var(x, ddof=1)
+varianza_y = np.var(y, ddof=1)
+
+
+desviacion_estandar_x = np.std(x, ddof=1)
+desviacion_estandar_y = np.std(y, ddof=1)
+
+
+# Determinar si los datos son unimodales o bimodales
+unimodal_x = stats.mode(x).count[0] == len(x)
+unimodal_y = stats.mode(y).count[0] == len(y)
+
+
+bimodal_x = len(set(x)) == 2 and not unimodal_x
+bimodal_y = len(set(y)) == 2 and not unimodal_y
+
+
+# Imprimir resultados
+print("Variable x:")
+print("Media:", media_x)
+print("Mediana:", mediana_x)
+print("Varianza muestral:", varianza_x)
+print("Desviación estándar:", desviacion_estandar_x)
+print("Unimodal:", unimodal_x)
+print("Bimodal:", bimodal_x)
+
+print("\nVariable y:")
+print("Media:", media_y)
+print("Mediana:", mediana_y)
+print("Varianza muestral:", varianza_y)
+print("Desviación estándar:", desviacion_estandar_y)
+print("Unimodal:", unimodal_y)
+print("Bimodal:", bimodal_y)
+
+
+
+import numpy as np
+
+
+
+# Filtrar los datos por los valores de 0 y 1
+data_0 = [d for d in data if d[2] == 0]
+data_1 = [d for d in data if d[2] == 1]
+
+# Obtener las variables correspondientes a los valores 0
+x_0 = [d[0] for d in data_0]
+y_0 = [d[1] for d in data_0]
+
+# Obtener las variables correspondientes a los valores 1
+x_1 = [d[0] for d in data_1]
+y_1 = [d[1] for d in data_1]
+
+# Calcular medidas de tendencia central para los valores 0
+media_x_0 = np.mean(x_0)
+media_y_0 = np.mean(y_0)
+mediana_x_0 = np.median(x_0)
+mediana_y_0 = np.median(y_0)
+
+# Calcular medidas de tendencia central para los valores 1
+media_x_1 = np.mean(x_1)
+media_y_1 = np.mean(y_1)
+mediana_x_1 = np.median(x_1)
+mediana_y_1 = np.median(y_1)
+
+# Calcular varianza muestral y desviación estándar para los valores 0
+varianza_x_0 = np.var(x_0, ddof=1)
+varianza_y_0 = np.var(y_0, ddof=1)
+desviacion_estandar_x_0 = np.std(x_0, ddof=1)
+desviacion_estandar_y_0 = np.std(y_0, ddof=1)
+
+# Calcular varianza muestral y desviación estándar para los valores 1
+varianza_x_1 = np.var(x_1, ddof=1)
+varianza_y_1 = np.var(y_1, ddof=1)
+desviacion_estandar_x_1 = np.std(x_1, ddof=1)
+desviacion_estandar_y_1 = np.std(y_1, ddof=1)
+
+# Imprimir resultados para los valores 0
+print("Valores 0:")
+print("Media x:", media_x_0)
+print("Mediana x:", mediana_x_0)
+print("Varianza muestral x:", varianza_x_0)
+print("Desviación estándar x:", desviacion_estandar_x_0)
+print("Media y:", media_y_0)
+print("Mediana y:", mediana_y_0)
+print("Varianza muestral y:", varianza_y_0)
+print("Desviación estándar y:", desviacion_estandar_y_0)
+
+# Imprimir resultados para los valores 1
+
+print("\nValores 1:")
+print("Media x:", media_x_1)
+print("Mediana x:", mediana_x_1)
+print("Varianza muestral x:", varianza_x_1)
+print("Desviación estándar",desviacion_estandar_x_1)
+
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+x = [d[0] for d in data]
+y = [d[1] for d in data]
+z = [d[2] for d in data]
+
+# Histograma de x
+plt.figure(figsize=(8, 6))
+plt.hist(x, bins=10, color='skyblue')
+plt.xlabel('x')
+plt.ylabel('Frecuencia')
+plt.title('Histograma de x')
+plt.show()
+
+# Histograma  y
+plt.figure(figsize=(8, 6))
+plt.hist(y, bins=10, color='lightgreen')
+plt.xlabel('y')
+plt.ylabel('Frecuencia')
+plt.title('Histograma de y')
+plt.show()
+
+# Histograma  z
+plt.figure(figsize=(8, 6))
+plt.hist(z, bins=2, color='lightpink')
+plt.xlabel('z')
+plt.ylabel('Frecuencia')
+plt.title('Histograma de z')
+plt.xticks([0.25, 0.75], ['No usado', 'Usado'])
+plt.show()
+
+# Gráfica de caja  para la variable x
+plt.figure(figsize=(8, 6))
+plt.boxplot(x)
+plt.ylabel('x')
+plt.title('Gráfica de caja (boxplot) de x')
+plt.show()
+
+# Gráfica de caja (boxplot) para la variable y
+plt.figure(figsize=(8, 6))
+plt.boxplot(y)
+plt.ylabel('y')
+plt.title('Gráfica de caja (boxplot) de y')
+plt.show()
+
+# Gráfica de caja (boxplot) para la variable z
+plt.figure(figsize=(8, 6))
+plt.boxplot(z)
+plt.ylabel('z')
+plt.title('Gráfica de caja (boxplot) de z')
+plt.yticks([0, 1], ['No usado', 'Usado'])
+plt.show()
+
+# Gráfica de bigote (violin plot) para la variable x
+plt.figure(figsize=(8, 6))
+sns.violinplot(x=x)
+plt.ylabel('x')
+plt.title('Gráfica de bigote (violin plot) de x')
+plt.show()
+
+# Gráfica de bigote (violin plot) para la variable y
+plt.figure(figsize=(8, 6))
+sns.violinplot(x=y)
+plt.ylabel('y')
+plt.title('Gráfica de bigote (violin plot) de y')
+plt.show()
+
+# Gráfica de bigote (violin plot) para la variable z
+plt.figure(figsize=(8, 6))
+sns.violinplot(x=z)
+plt.ylabel('z')
+plt.title('Gráfica de bigote (violin plot) de z')
+plt.yticks([0, 1], ['No usado', 'Usado'])
+plt.show()
+
+
+Analisis para los valores de uso de microfono
+
+import numpy as np
+
+data = np.array([
+    [20, 5, 1], [25, 7, 1], [15, 3, 1], [30, 0, 1], [22, 6, 1], [18, 4, 1], [27, 7, 1], [25, 7, 1],
+    [35, 9, 1], [23, 6, 1], [19, 4, 1], [28, 7, 1], [32, 8, 1], [21, 5, 1], [17, 3, 1], [29, 7, 1],
+    [31, 8, 1], [26, 7, 1], [16, 4, 1], [33, 9, 1], [34, 9, 1], [23, 1, 1], [10, 0, 1], [15, 2, 1],
+    [35, 5, 1], [25, 7, 1], [40, 8, 1], [33, 4, 1], [24, 4, 1], [18, 4, 1], [25, 5, 1], [25, 2, 1],
+    [35, 9, 1], [23, 2, 1], [19, 4, 1], [5, 0, 1], [34, 4, 1], [21, 3, 1], [35, 2, 1], [40, 8, 1],
+    [22, 3, 1], [12, 2, 1], [15, 3, 1], [26, 4, 1], [32, 3, 1], [23, 3, 1], [15, 2, 1], [12, 3, 1],
+    [23, 3, 1], [21, 3, 1]
+])
+
+x = data[:, 0]  # Tiempo de partida
+y = data[:, 1]  # Número de bajas por todo el equipo
+
+media = np.mean(x)
+mediana = np.median(x)
+desviacion_estandar = np.std(x)
+
+asimetria = (3 * (media - mediana)) / desviacion_estandar
+
+print("Coeficiente de asimetría:", asimetria)
+
+
+import matplotlib.pyplot as plt
+
+plt.hist(x, bins='auto', alpha=0.7)
+plt.xlabel('Tiempo de partida')
+plt.ylabel('Frecuencia')
+plt.title('Distribución de tiempos de partida')
+plt.show()
+
+
+import numpy as np
+
+data = np.array([
+    [20, 5, 1], [25, 7, 1], [15, 3, 1], [30, 0, 1], [22, 6, 1], [18, 4, 1], [27, 7, 1], [25, 7, 1],
+    [35, 9, 1], [23, 6, 1], [19, 4, 1], [28, 7, 1], [32, 8, 1], [21, 5, 1], [17, 3, 1], [29, 7, 1],
+    [31, 8, 1], [26, 7, 1], [16, 4, 1], [33, 9, 1], [34, 9, 1], [23, 1, 1], [10, 0, 1], [15, 2, 1],
+    [35, 5, 1], [25, 7, 1], [40, 8, 1], [33, 4, 1], [24, 4, 1], [18, 4, 1], [25, 5, 1], [25, 2, 1],
+    [35, 9, 1], [23, 2, 1], [19, 4, 1], [5, 0, 1], [34, 4, 1], [21, 3, 1], [35, 2, 1], [40, 8, 1],
+    [22, 3, 1], [12, 2, 1], [15, 3, 1], [26, 4, 1], [32, 3, 1], [23, 3, 1], [15, 2, 1], [12, 3, 1],
+    [23, 3, 1], [21, 3, 1]
+])
+
+x = data[:, 0]  # Tiempo de partida
+y = data[:, 1]  # Número de bajas por todo el equipo
+
+media_x = np.mean(x)
+media_y = np.mean(y)
+
+varianza_x = np.var(x)
+varianza_y = np.var(y)
+
+covarianza = np.cov(x, y)[0, 1]
+
+print("Varianza de x:", varianza_x)
+print("Varianza de y:", varianza_y)
+print("Covarianza:", covarianza)
+
+
+print("media",media_x )
+print("mediay",media_y)
+
+Analisis para los datos recabados con el microfoni encendido
+
+import numpy as np
+
+data = np.array([
+     [ 22,2,0], [35,6,0],[32,4,0],[15,2,0],[10,1,0],[12,2,0],[12,2,0],[10,0,0],[11,1,0],[8,1,0 ],[25,2,0],[22,1,0],[21,0,0],[7,1,0,],[5,0,0 ],
+    [10,1,0],[9,0,0 ],[15,3,0],[12,0,0],[14,4,0], [18,3,0],[10,0,0],[11,1,0],[14,3,0],[42,6,0],[15,1,0],[19,1,0],[16,2,0],[14,1,0],[11,2,0],
+    [14,3,0],[16,2,0],[17,1,0],[38,5,0],[24,4,0],[23,3,0],[26,0,0],[11,1,0],[19,1,0],[10,0,0], [11,2,0], [16,3,0],[14,3,0], [13,3,0],
+    [15,3,0],[14,0,0],[25,1,0],[17,0,0],[14,4,0],[12,0,0]
+])
+
+x = data[:, 0]  # Tiempo de partida
+y = data[:, 1]  # Número de bajas por todo el equipo
+
+media = np.mean(x)
+mediana = np.median(x)
+desviacion_estandar = np.std(x)
+
+asimetria = (3 * (media - mediana)) / desviacion_estandar
+
+print("Coeficiente de asimetría:", asimetria)
+
+plt.hist(x, bins='auto', alpha=0.7)
+plt.xlabel('Tiempo de partida')
+plt.ylabel('Frecuencia')
+plt.title('Distribución de tiempos de partida')
+plt.show()
+
+import numpy as np
+
+data = np.array([
+    [ 22,2,0], [35,6,0],[32,4,0],[15,2,0],[10,1,0],[12,2,0],[12,2,0],[10,0,0],[11,1,0],[8,1,0 ],[25,2,0],[22,1,0],[21,0,0],[7,1,0,],[5,0,0 ],
+    [10,1,0],[9,0,0 ],[15,3,0],[12,0,0],[14,4,0], [18,3,0],[10,0,0],[11,1,0],[14,3,0],[42,6,0],[15,1,0],[19,1,0],[16,2,0],[14,1,0],[11,2,0],
+    [14,3,0],[16,2,0],[17,1,0],[38,5,0],[24,4,0],[23,3,0],[26,0,0],[11,1,0],[19,1,0],[10,0,0], [11,2,0], [16,3,0],[14,3,0], [13,3,0],
+    [15,3,0],[14,0,0],[25,1,0],[17,0,0],[14,4,0],[12,0,0]
+])
+
+x = data[:, 0]  # Tiempo de partida
+y = data[:, 1]  # Número de bajas por todo el equipo
+
+media_x = np.mean(x)
+media_y = np.mean(y)
+
+varianza_x = np.var(x)
+varianza_y = np.var(y)
+
+mediana_x= np.median(x)
+meadian_y= np.median(y)
+
+desviacion_estandar_x = np.std(x, ddof=1)
+desviacion_estandar_y = np.std(y, ddof=1)
+
+covarianza = np.cov(x, y)[0, 1]  # La matriz de covarianza devuelve una matriz de 2x2, seleccionamos la posición [0, 1]
+
+print("Varianza de x:", varianza_x)
+print("Varianza de y:", varianza_y)
+print("Covarianza:", covarianza)
+
+
+print("media_x",media_x )
+print("media_y",media_y)
+
+print("mediana_x",mediana_x )
+print("mediana_y",mediana_y)
+
+
+print("Desviación estándar:", desviacion_estandar_x)
+print("Desviación estándar:", desviacion_estandar_y)
+
+
+
+
+
+Determinacion del tipo de distribucion de nuestros Datos para relizar las actividades de nuestro Bloque 2 , ademas aqui se inlcuyen temas del Bloque 3
+
+import numpy as np
+from scipy.stats import shapiro
+
+
+data = np.array([
+      [20, 5, 1],
+    [25, 7, 1],
+    [15, 3, 1],
+    [30, 0, 1],
+    [22, 6, 1],
+    [18, 4, 1],
+    [27, 7, 1],
+    [25, 7, 1],
+    [35, 9, 1],
+    [23, 6, 1],
+    [19, 4, 1],
+    [28, 7, 1],
+    [32, 8, 1],
+    [21, 5, 1],
+    [17, 3, 1],
+    [29, 7, 1],
+    [31, 8, 1],
+    [26, 7, 1],
+    [16, 4, 1],
+    [33, 9, 1],
+    [34, 9, 1],
+    [23, 1, 1],
+    [10, 0, 1],
+    [15, 2, 1],
+    [35, 5, 1],
+    [25, 7, 1],
+    [40, 8, 1],
+    [33, 4, 1],
+    [24, 4, 1],
+    [18, 4, 1],
+    [25, 5, 1],
+    [25, 2, 1],
+    [35, 9, 1],
+    [23, 2, 1],
+    [19, 4, 1],
+    [5, 0, 1],
+    [34, 4, 1 ],
+    [21,3 ,1 ],
+    [35,2,1 ],
+    [40,8,1  ],
+    [ 22,3,1  ],
+    [ 12,2,1 ],
+    [ 15,3,1 ],
+    [  26,4,1 ],
+    [  32,3,1 ],
+    [  23,3,1 ],
+    [  15,2,1 ],
+    [  12,3,1 ],
+    [  23,3,1],
+    [ 21,3,1],
+    [ 22,2,0],
+    [35,6,0],
+    [32,4,0],
+    [15,2,0],
+    [10,1,0],
+    [12,2,0],
+    [12,2,0],
+    [10,0,0],
+    [11,1,0],
+    [8,1,0 ],
+    [25,2,0],
+    [22,1,0],
+    [21,0,0],
+    [7,1,0,],
+    [5,0,0 ],
+    [10,1,0],
+    [9,0,0 ],
+    [15,3,0],
+    [12,0,0],
+    [14,4,0],
+    [18,3,0],
+    [10,0,0],
+    [11,1,0],
+    [14,3,0],
+    [42,6,0],
+    [15,1,0],
+    [19,1,0],
+    [16,2,0],
+    [14,1,0],
+    [11,2,0],
+    [14,3,0],
+    [16,2,0],
+    [17,1,0],
+    [38,5,0],
+    [24,4,0],
+    [23,3,0],
+    [26,0,0],
+    [11,1,0],
+    [19,1,0],
+    [10,0,0],
+    [11,2,0],
+    [16,3,0],
+    [14,3,0],
+    [13,3,0],
+    [15,3,0],
+    [14,0,0],
+    [25,1,0],
+    [17,0,0],
+    [14,4,0],
+    [12,0,0],
+
+])
+
+# Realizar la prueba de normalidad (prueba de Shapiro-Wilk)
+stat, p_value = shapiro(data[:, 1])  # Se selecciona la segunda columna (variable Y)
+
+# Imprimir los resultados
+print("Estadística de prueba:", stat)
+print("Valor p:", p_value)
+
+# Interpretar los resultados
+alpha = 0.05  # Nivel de significancia
+if p_value > alpha:
+    print("No se puede rechazar la hipótesis nula. Los datos podrían seguir una distribución normal.")
+else:
+    print("Se rechaza la hipótesis nula. Los datos no siguen una distribución normal.")
+
+
+import numpy as np
+from scipy.stats import binom_test
+
+# Datos proporcionados
+data = np.array([
+    [20, 5, 1],
+    [25, 7, 1],
+    [15, 3, 1],
+    [30, 0, 1],
+    [22, 6, 1],
+    [18, 4, 1],
+    [27, 7, 1],
+    [25, 7, 1],
+    [35, 9, 1],
+    [23, 6, 1],
+    [19, 4, 1],
+    [28, 7, 1],
+    [32, 8, 1],
+    [21, 5, 1],
+    [17, 3, 1],
+    [29, 7, 1],
+    [31, 8, 1],
+    [26, 7, 1],
+    [16, 4, 1],
+    [33, 9, 1],
+    [34, 9, 1],
+    [23, 1, 1],
+    [10, 0, 1],
+    [15, 2, 1],
+    [35, 5, 1],
+    [25, 7, 1],
+    [40, 8, 1],
+    [33, 4, 1],
+    [24, 4, 1],
+    [18, 4, 1],
+    [25, 5, 1],
+    [25, 2, 1],
+    [35, 9, 1],
+    [23, 2, 1],
+    [19, 4, 1],
+    [5, 0, 1],
+    [34, 4, 1 ],
+    [21,3 ,1 ],
+    [35,2,1 ],
+    [40,8,1  ],
+    [ 22,3,1  ],
+    [ 12,2,1 ],
+    [ 15,3,1 ],
+    [  26,4,1 ],
+    [  32,3,1 ],
+    [  23,3,1 ],
+    [  15,2,1 ],
+    [  12,3,1 ],
+    [  23,3,1],
+    [ 21,3,1],
+    [ 22,2,0],
+    [35,6,0],
+    [32,4,0],
+    [15,2,0],
+    [10,1,0],
+    [12,2,0],
+    [12,2,0],
+    [10,0,0],
+    [11,1,0],
+    [8,1,0 ],
+    [25,2,0],
+    [22,1,0],
+    [21,0,0],
+    [7,1,0,],
+    [5,0,0 ],
+    [10,1,0],
+    [9,0,0 ],
+    [15,3,0],
+    [12,0,0],
+    [14,4,0],
+    [18,3,0],
+    [10,0,0],
+    [11,1,0],
+    [14,3,0],
+    [42,6,0],
+    [15,1,0],
+    [19,1,0],
+    [16,2,0],
+    [14,1,0],
+    [11,2,0],
+    [14,3,0],
+    [16,2,0],
+    [17,1,0],
+    [38,5,0],
+    [24,4,0],
+    [23,3,0],
+    [26,0,0],
+    [11,1,0],
+    [19,1,0],
+    [10,0,0],
+    [11,2,0],
+    [16,3,0],
+    [14,3,0],
+    [13,3,0],
+    [15,3,0],
+    [14,0,0],
+    [25,1,0],
+    [17,0,0],
+    [14,4,0],
+    [12,0,0],
+
+])
+
+# Extraer los valores de la variable binaria
+binomial_data = data[:, 2]
+
+# Realizar la prueba de binomial
+p_value = binom_test(sum(binomial_data), len(binomial_data), p=0.5)
+
+# Imprimir el resultado
+alpha = 0.05  # Nivel de significancia
+if p_value > alpha:
+    print("No se puede rechazar la hipótesis nula. Los datos podrían seguir una distribución binomial.")
+else:
+    print("Se rechaza la hipótesis nula. Los datos no siguen una distribución binomial.")
+
+import numpy as np
+from scipy.stats import binom
+from scipy.optimize import minimize_scalar
+
+data = [
+    [20, 5, 1], [25, 7, 1], [15, 3, 1], [30, 0, 1], [22, 6, 1], [18, 4, 1], [27, 7, 1], [25, 7, 1], [35, 9, 1], [23, 6, 1],
+    [19, 4, 1], [28, 7, 1], [32, 8, 1], [21, 5, 1], [17, 3, 1], [29, 7, 1], [31, 8, 1], [26, 7, 1], [16, 4, 1], [33, 9, 1],
+    [34, 9, 1], [23, 1, 1], [10, 0, 1], [15, 2, 1], [35, 5, 1], [25, 7, 1], [40, 8, 1], [33, 4, 1], [24, 4, 1], [18, 4, 1],
+    [25, 5, 1], [25, 2, 1], [35, 9, 1], [23, 2, 1], [19, 4, 1], [5, 0, 1], [34, 4, 1], [21, 3, 1], [35, 2, 1], [40, 8, 1],
+    [22, 3, 1], [12, 2, 1], [15, 3, 1], [26, 4, 1], [32, 3, 1], [23, 3, 1], [15, 2, 1], [12, 3, 1], [23, 3, 1], [21, 3, 1],
+    [22, 2, 0], [35, 6, 0], [32, 4, 0], [15, 2, 0], [10, 1, 0], [12, 2, 0], [12, 2, 0], [10, 0, 0], [11, 1, 0], [8, 1, 0],
+    [25, 2, 0], [22, 1, 0], [21, 0, 0], [7, 1, 0], [5, 0, 0], [10, 1, 0], [9, 0, 0], [15, 3, 0], [12, 0, 0], [14, 4, 0],
+    [18, 3, 0], [10, 0, 0], [11, 1, 0], [14, 3, 0], [42, 6, 0], [15, 1, 0], [19, 1, 0], [16, 2, 0], [14, 1, 0], [11, 2, 0],
+    [14, 3, 0], [16, 2, 0], [17, 1, 0], [38, 5, 0], [24, 4, 0], [23, 3, 0], [26, 0, 0], [11, 1, 0], [19, 1, 0], [10, 0, 0],
+    [11, 2, 0], [16, 3, 0], [14, 3, 0], [13, 3, 0], [15, 3, 0], [14, 0, 0], [25, 1, 0], [17, 0, 0], [14, 4, 0], [12, 0, 0]
+]
+x_values = [d[0] for d in data]
+y_values = [d[1] for d in data]
+z_values = [d[2] for d in data]
+
+
+
+x_mean = np.mean(x_values)
+y_mean = np.mean(y_values)
+z_mean = np.mean(z_values)
+
+
+
+x_var = np.var(x_values)
+x_moment_est = x_mean
+
+y_var = np.var(y_values)
+y_moment_est = y_mean
+
+z_var = z_mean * (1 - z_mean)
+z_moment_est = z_mean
+
+
+def verosimilitud(p):
+    verosimilitud = -np.sum(binom.logpmf(y_values, x_values, p))
+    return verosimilitud
+
+
+result = minimize_scalar(verosimilitud, bounds=(0, 1), method='bounded')
+p_ml = result.x
+
+print(p_ml)
+
+
+import numpy as np
+from scipy.stats import binom
+from scipy.optimize import minimize_scalar
+
+data = [
+
+  [ 22,2,0], [35,6,0],[32,4,0],[15,2,0],[10,1,0],[12,2,0],[12,2,0],[10,0,0],[11,1,0],[8,1,0 ],[25,2,0],[22,1,0],[21,0,0],[7,1,0,],[5,0,0 ],
+    [10,1,0],[9,0,0 ],[15,3,0],[12,0,0],[14,4,0], [18,3,0],[10,0,0],[11,1,0],[14,3,0],[42,6,0],[15,1,0],[19,1,0],[16,2,0],[14,1,0],[11,2,0],
+    [14,3,0],[16,2,0],[17,1,0],[38,5,0],[24,4,0],[23,3,0],[26,0,0],[11,1,0],[19,1,0],[10,0,0], [11,2,0], [16,3,0],[14,3,0], [13,3,0],
+    [15,3,0],[14,0,0],[25,1,0],[17,0,0],[14,4,0],[12,0,0]
+
+
+ ]
+x_values = [d[0] for d in data]
+y_values = [d[1] for d in data]
+z_values = [d[2] for d in data]
+
+
+
+x_mean = np.mean(x_values)
+y_mean = np.mean(y_values)
+z_mean = np.mean(z_values)
+
+
+
+x_var = np.var(x_values)
+x_moment_est = x_mean
+
+y_var = np.var(y_values)
+y_moment_est = y_mean
+
+z_var = z_mean * (1 - z_mean)
+z_moment_est = z_mean
+
+
+def log_likelihood(p):
+    log_likelihood = -np.sum(binom.logpmf(y_values, x_values, p))
+    return log_likelihood
+
+
+result = minimize_scalar(log_likelihood, bounds=(0, 1), method='bounded')
+p_ml = result.x
+
+print(p_ml)
+
+
+El resultado 0.15701726221320314 obtenido significa que el valor estimado de máxima verosimilitud para el parámetro p (probabilidad de éxito en una distribución binomial) es aproximadamente 0.157.
+
+El valor estimado de máxima verosimilitud para p es útil porque nos proporciona una estimación puntual del parámetro p que mejor se ajusta a los datos observados. En este caso, p representa la probabilidad de éxito (por ejemplo, tener una baja en la partida) en una distribución binomial.
+
+import numpy as np
+from scipy.stats import binom
+from scipy.optimize import minimize_scalar
+
+data = [
+    [20, 5, 1], [25, 7, 1], [15, 3, 1], [30, 0, 1], [22, 6, 1], [18, 4, 1], [27, 7, 1], [25, 7, 1], [35, 9, 1], [23, 6, 1],
+    [19, 4, 1], [28, 7, 1], [32, 8, 1], [21, 5, 1], [17, 3, 1], [29, 7, 1], [31, 8, 1], [26, 7, 1], [16, 4, 1], [33, 9, 1],
+    [34, 9, 1], [23, 1, 1], [10, 0, 1], [15, 2, 1], [35, 5, 1], [25, 7, 1], [40, 8, 1], [33, 4, 1], [24, 4, 1], [18, 4, 1],
+    [25, 5, 1], [25, 2, 1], [35, 9, 1], [23, 2, 1], [19, 4, 1], [5, 0, 1], [34, 4, 1], [21, 3, 1], [35, 2, 1], [40, 8, 1],
+    [22, 3, 1], [12, 2, 1], [15, 3, 1], [26, 4, 1], [32, 3, 1], [23, 3, 1], [15, 2, 1], [12, 3, 1], [23, 3, 1], [21, 3, 1],
+]
+x_values = [d[0] for d in data]
+y_values = [d[1] for d in data]
+z_values = [d[2] for d in data]
+
+
+
+x_mean = np.mean(x_values)
+y_mean = np.mean(y_values)
+z_mean = np.mean(z_values)
+
+
+
+x_var = np.var(x_values)
+x_moment_est = x_mean
+
+y_var = np.var(y_values)
+y_moment_est = y_mean
+
+z_var = z_mean * (1 - z_mean)
+z_moment_est = z_mean
+
+
+def log_likelihood(p):
+    log_likelihood = -np.sum(binom.logpmf(y_values, x_values, p))
+    return log_likelihood
+
+
+result = minimize_scalar(log_likelihood, bounds=(0, 1), method='bounded')
+p_ml = result.x
+
+print(p_ml)
+
+
+De qué rayos nos sriven  obtener estos valores :
+
+Nos permiten comprender mejor la relación entre la duración de una partida y el número de bajas, y cómo la variable binaria (uso del micrófono) puede influir en esta relación.
+
+
+
+Tambien nos puede servir como base para realizar inferencias sobre la población en general, por ejemplo, estimar la probabilidad de éxito en futuras partidas.
+Puede usarse en comparaciones entre diferentes grupos o condiciones, para evaluar si hay diferencias significativas en la probabilidad de éxito según la duración de la partida y el uso del micrófono.
+
+import numpy as np
+from scipy.stats import binom
+from statsmodels.stats.proportion import proportion_confint
+
+# Datos de duración de la partida, número de bajas y variable binaria
+data = [
+    [20, 5, 1], [25, 7, 1], [15, 3, 1], [30, 0, 1], [22, 6, 1], [18, 4, 1],
+    [27, 7, 1], [25, 7, 1], [35, 9, 1], [23, 6, 1], [19, 4, 1], [28, 7, 1],
+    [32, 8, 1], [21, 5, 1], [17, 3, 1], [29, 7, 1], [31, 8, 1], [26, 7, 1],
+    [16, 4, 1], [33, 9, 1], [34, 9, 1], [23, 1, 1], [10, 0, 1], [15, 2, 1],
+    [35, 5, 1], [25, 7, 1], [40, 8, 1], [33, 4, 1], [24, 4, 1], [18, 4, 1],
+    [25, 5, 1], [25, 2, 1], [35, 9, 1], [23, 2, 1], [19, 4, 1], [5, 0, 1],
+    [34, 4, 1], [21, 3, 1], [35, 2, 1], [40, 8, 1], [22, 3, 1], [12, 2, 1],
+    [15, 3, 1], [26, 4, 1], [32, 3, 1], [23, 3, 1], [15, 2, 1], [12, 3, 1],
+    [23, 3, 1], [21, 3, 1], [22, 2, 0], [35, 6, 0], [32, 4, 0], [15, 2, 0],
+    [10, 1, 0], [12, 2, 0], [12, 2, 0], [10, 0, 0], [11, 1, 0], [8, 1, 0],
+    [25, 2, 0], [22, 1, 0], [21, 0, 0], [7, 1, 0], [5, 0, 0], [10, 1, 0],
+    [9, 0, 0], [15, 3, 0], [12, 0, 0], [14, 4, 0], [18, 3, 0], [10, 0, 0],
+    [11, 1, 0], [14, 3, 0], [42, 6, 0], [15, 1, 0], [19, 1, 0], [16, 2, 0],
+    [14, 1, 0], [11, 2, 0], [14, 3, 0], [16, 2, 0], [17, 1, 0], [38, 5, 0],
+    [24, 4, 0], [23, 3, 0], [26, 0, 0], [11, 1, 0], [19, 1, 0], [10, 0, 0],
+    [11, 2, 0], [16, 3, 0], [14, 3, 0], [13, 3, 0], [15, 3, 0], [14, 0, 0],
+    [25, 1, 0], [17, 0, 0], [14, 4, 0], [12, 0, 0]
+]
+
+
+# Extraer los valores de duración de la partida y número de bajas
+x_values = [item[0] for item in data]
+y_values = [item[1] for item in data]
+
+
+
+# Calcular la probabilidad de éxito (p) para cada duración de la partida
+p_values = [y / x for x, y in zip(x_values, y_values)]
+
+
+# Calcular los intervalos de confianza para p utilizando el método de Wilson
+confint = [proportion_confint(y, n, alpha=0.05, method='wilson') for y, n in zip(y_values, x_values)]
+
+# Calcular los intervalos de confianza para la duración de la partida donde es más probable realizar bajas
+ci_duration = [(y / p, n / p) for (y, n), p in zip(confint, p_values)]
+
+
+# Imprimir los intervalos de confianza para la duración de la partida donde es más probable realizar bajas
+for idx, (lower, upper) in enumerate(ci_duration):
+    print(f"Intervalo de confianza para la duración de la partida {x_values[idx]} - ({lower}, {upper})")
+
+
+Bloque 4
+
+import matplotlib.pyplot as plt
+
+data = [
+    [20, 5, 1], [25, 7, 1], [15, 3, 1], [30, 0, 1], [22, 6, 1], [18, 4, 1], [27, 7, 1], [25, 7, 1],
+    [35, 9, 1], [23, 6, 1], [19, 4, 1], [28, 7, 1], [32, 8, 1], [21, 5, 1], [17, 3, 1], [29, 7, 1],
+    [31, 8, 1], [26, 7, 1], [16, 4, 1], [33, 9, 1], [34, 9, 1], [23, 1, 1], [10, 0, 1], [15, 2, 1],
+    [35, 5, 1], [25, 7, 1], [40, 8, 1], [33, 4, 1], [24, 4, 1], [18, 4, 1], [25, 5, 1], [25, 2, 1],
+    [35, 9, 1], [23, 2, 1], [19, 4, 1], [5, 0, 1], [34, 4, 1], [21, 3, 1], [35, 2, 1], [40, 8, 1],
+    [22, 3, 1], [12, 2, 1], [15, 3, 1], [26, 4, 1], [32, 3, 1], [23, 3, 1], [15, 2, 1], [12, 3, 1],
+    [23, 3, 1], [21, 3, 1]
+]
+
+x = [row[0] for row in data]
+y = [row[1] for row in data]
+
+plt.scatter(x, y)
+plt.xlabel('Tiempo de partida')
+plt.ylabel('Número de bajas')
+plt.title('Relación entre el tiempo de partida y el número de bajas')
+plt.show()
+
+
+import matplotlib.pyplot as plt
+
+data = [
+
+
+
+    [22, 2, 0], [35, 6, 0], [32, 4, 0], [15, 2, 0], [10, 1, 0], [12, 2, 0], [12, 2, 0], [10, 0, 0], [11, 1, 0], [8, 1, 0],
+    [25, 2, 0], [22, 1, 0], [21, 0, 0], [7, 1, 0], [5, 0, 0], [10, 1, 0], [9, 0, 0], [15, 3, 0], [12, 0, 0], [14, 4, 0],
+    [18, 3, 0], [10, 0, 0], [11, 1, 0], [14, 3, 0], [42, 6, 0], [15, 1, 0], [19, 1, 0], [16, 2, 0], [14, 1, 0], [11, 2, 0],
+    [14, 3, 0], [16, 2, 0], [17, 1, 0], [38, 5, 0], [24, 4, 0], [23, 3, 0], [26, 0, 0], [11, 1, 0], [19, 1, 0], [10, 0, 0],
+    [11, 2, 0], [16, 3, 0], [14, 3, 0], [13, 3, 0], [15, 3, 0], [14, 0, 0], [25, 1, 0], [17, 0, 0], [14, 4, 0], [12, 0, 0]
+
+]
+
+x = [row[0] for row in data]
+y = [row[1] for row in data]
+
+plt.scatter(x, y)
+plt.xlabel('Tiempo de partida')
+plt.ylabel('Número de bajas')
+plt.title('Relación entre el tiempo de partida y el número de bajas')
+plt.show()
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+data = np.array([
+    [20, 5, 1], [25, 7, 1], [15, 3, 1], [30, 0, 1], [22, 6, 1], [18, 4, 1], [27, 7, 1], [25, 7, 1],
+    [35, 9, 1], [23, 6, 1], [19, 4, 1], [28, 7, 1], [32, 8, 1], [21, 5, 1], [17, 3, 1], [29, 7, 1],
+    [31, 8, 1], [26, 7, 1], [16, 4, 1], [33, 9, 1], [34, 9, 1], [23, 1, 1], [10, 0, 1], [15, 2, 1],
+    [35, 5, 1], [25, 7, 1], [40, 8, 1], [33, 4, 1], [24, 4, 1], [18, 4, 1], [25, 5, 1], [25, 2, 1],
+    [35, 9, 1], [23, 2, 1], [19, 4, 1], [5, 0, 1], [34, 4, 1], [21, 3, 1], [35, 2, 1], [40, 8, 1],
+    [22, 3, 1], [12, 2, 1], [15, 3, 1], [26, 4, 1], [32, 3, 1], [23, 3, 1], [15, 2, 1], [12, 3, 1],
+    [23, 3, 1], [21, 3, 1]
+])
+
+x = data[:, 0]  # Tiempo de partida
+y = data[:, 1]  # Número de bajas por todo el equipo
+
+# regresión lineal
+A = np.vstack([x, np.ones(len(x))]).T
+m, c = np.linalg.lstsq(A, y, rcond=None)[0]
+
+#  gráfico de dispersión con la línea de regresión
+plt.scatter(x, y, label='Datos')
+plt.plot(x, m*x + c, 'r', label='Línea de Regresión')
+plt.xlabel('Tiempo de partida')
+plt.ylabel('Número de bajas')
+plt.title('Regresión Lineal')
+plt.legend()
+plt.show()
+
+
+#y = mx + c
+print("Ecuación de la recta: y = {:.2f}x + {:.2f}".format(m, c))
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+data = np.array([
+
+
+    [22, 2, 0], [35, 6, 0], [32, 4, 0], [15, 2, 0], [10, 1, 0], [12, 2, 0], [12, 2, 0], [10, 0, 0], [11, 1, 0], [8, 1, 0],
+    [25, 2, 0], [22, 1, 0], [21, 0, 0], [7, 1, 0], [5, 0, 0], [10, 1, 0], [9, 0, 0], [15, 3, 0], [12, 0, 0], [14, 4, 0],
+    [18, 3, 0], [10, 0, 0], [11, 1, 0], [14, 3, 0], [42, 6, 0], [15, 1, 0], [19, 1, 0], [16, 2, 0], [14, 1, 0], [11, 2, 0],
+    [14, 3, 0], [16, 2, 0], [17, 1, 0], [38, 5, 0], [24, 4, 0], [23, 3, 0], [26, 0, 0], [11, 1, 0], [19, 1, 0], [10, 0, 0],
+    [11, 2, 0], [16, 3, 0], [14, 3, 0], [13, 3, 0], [15, 3, 0], [14, 0, 0], [25, 1, 0], [17, 0, 0], [14, 4, 0], [12, 0, 0]
+
+
+])
+
+x = data[:, 0]  # Tiempo de partida
+y = data[:, 1]  # Número de bajas por todo el equipo
+
+# regresión lineal
+A = np.vstack([x, np.ones(len(x))]).T
+m, c = np.linalg.lstsq(A, y, rcond=None)[0]
+
+#  gráfico de dispersión con la línea de regresión
+plt.scatter(x, y, label='Datos')
+plt.plot(x, m*x + c, 'r', label='Línea de Regresión')
+plt.xlabel('Tiempo de partida')
+plt.ylabel('Número de bajas')
+plt.title('Regresión Lineal')
+plt.legend()
+plt.show()
+
+#y = mx + c
+print("Ecuación de la recta: y = {:.2f}x + {:.2f}".format(m, c))
